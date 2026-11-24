@@ -1,0 +1,10 @@
+{
+  "name": "devops-day17-18-practice",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "echo 'Running lint checks... OK'",
+    "test": "echo 'Running unit tests... OK'",
+    "build": "mkdir -p dist && echo 'ok' > dist/index.html"
+  }
+}

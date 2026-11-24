@@ -1,0 +1,40 @@
+name: Build Artifact
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+env:
+  VITE_API_URL: https://api.example.com
+
+jobs:
+  build-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "Building for $VITE_API_URL"
+          echo "DEPLOY_TOKEN length: ${#DEPLOY_TOKEN}"
+          npm run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
